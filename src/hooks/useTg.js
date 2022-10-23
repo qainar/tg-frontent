@@ -11,7 +11,7 @@ export function useTg(){
     }
     return {
         tg,
-        user : tg.initDataUnsafe?.user,
+        user: tg.initDataUnsafe?.user,
         onClose,
         toggleButton
     }

@@ -22,9 +22,17 @@ const Form = (callback, deps) => {
         }
     }, [onSendData, tg])
 
+    useEffect(()=> {
+        tg.MainButton.setParams({
+            text: 'Отправить данные'
+        })
+    }, [tg])
 
-
-
+    useEffect(()=>{
+        if (!street || !country){
+            tg.MainButton.hide()
+        }else tg.MainButton.show()
+    },[street, country, tg])
 
     const onChangeCountry = (e) => {
         setCountry(e.target.value)
@@ -55,7 +63,7 @@ const Form = (callback, deps) => {
                 onChange={onChangeStreet}
             />
             <select className={'select'} value={subject} onChange={onChangeSubject}>
-                <option value={'phisical'}>Физическое лицо</option>
+                <option value={'physical'}>Физическое лицо</option>
                 <option value={'legal'}>Юридическое лицо</option>
             </select>
         </div>

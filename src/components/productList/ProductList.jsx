@@ -20,18 +20,18 @@ const price = (items = []) =>{
     }, 0)
 }
 const ProductList = () => {
-    const [items, setItems] = useState([])
+    const [addedItems, setAddedItems] = useState([])
     const {tg} = useTg()
     const onAdd = (product) => {
-        const isAdded = items.find(item => item.id === product.id)
+        const isAdded = addedItems.find(item => item.id === product.id)
         let newItems = []
         if(isAdded) {
-            newItems = items.filter(item => item.id !== product.id)
+            newItems = addedItems.filter(item => item.id !== product.id)
         }else{
-            newItems = [...items, product]
+            newItems = [...addedItems, product]
         }
 
-        setItems(newItems)
+        setAddedItems(newItems)
 
         if(newItems.length === 0){
             tg.MainButton.hide()
@@ -41,11 +41,13 @@ const ProductList = () => {
                 text: `Купить: ${price(newItems)}`
             })
         }
+        console.log('dasdsa')
     }
     return (
         <div className={'list'}>
             {products.map(item => (
                 <ProductItem
+                    key={item.id}
                     product={item}
                     onAdd={onAdd}
                     className={'item'}

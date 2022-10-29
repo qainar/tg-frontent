@@ -13,6 +13,7 @@ export function useTg(){
         tg,
         user: tg.initDataUnsafe?.user,
         onClose,
-        toggleButton
+        toggleButton,
+        query_id: tg.initDataUnsafe?.query_id
     }
 }

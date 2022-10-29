@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useTg } from '../../hooks/useTg';
 import ProductItem from '../productItem/ProductItem';
 import './productList.css'
@@ -21,7 +21,32 @@ const price = (items = []) =>{
 }
 const ProductList = () => {
     const [addedItems, setAddedItems] = useState([])
-    const {tg} = useTg()
+    const {tg,query_id} = useTg()
+
+    const onSendData = useCallback(() => {
+        const data = {
+            products: addedItems,
+            totalPrice: price(addedItems),
+            query_id
+        }
+        
+        fetch('http://localhost:5000', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+    }, [addedItems])
+
+    useEffect(()=> {
+        tg.onEvent('mainButtonClicked', onSendData)
+        return () => {
+            tg.offEvent('mainButtonClicked', onSendData)
+        }
+    }, [onSendData, tg])
+
+
     const onAdd = (product) => {
         const isAdded = addedItems.find(item => item.id === product.id)
         let newItems = []
@@ -41,7 +66,7 @@ const ProductList = () => {
                 text: `Купить: ${price(newItems)}`
             })
         }
-        console.log('dasdsa')
+
     }
     return (
         <div className={'list'}>

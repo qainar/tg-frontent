@@ -30,7 +30,7 @@ const ProductList = () => {
             query_id
         }
         
-        fetch('https://telegramtest1zxczxczxczxcx.herokuapp.com/web-app', {
+        fetch('http://localhost:5000', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

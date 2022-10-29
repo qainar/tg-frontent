@@ -30,7 +30,7 @@ const ProductList = () => {
             query_id
         }
         
-        fetch('http://localhost:5000', {
+        fetch('http://localhost:5000/web-app', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
